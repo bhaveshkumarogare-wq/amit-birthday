@@ -8,34 +8,55 @@
 body{
 margin:0;
 padding:0;
-font-family: 'Segoe UI', sans-serif;
+font-family:'Segoe UI',sans-serif;
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:black;
+color:white;
 text-align:center;
 overflow:hidden;
 }
 
-/* Main Container */
+/* Glass Container */
 .container{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 width:90%;
+max-width:700px;
+background:rgba(0,0,0,0.6);
+padding:40px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+box-shadow:0 0 30px rgba(255,215,0,0.5);
 }
 
 /* Heading */
 h1{
-font-size:45px;
+font-size:40px;
 color:gold;
-text-shadow:0 0 20px gold;
+text-shadow:0 0 20px orange;
+margin-bottom:10px;
+}
+
+h2{
+color:gold;
+text-shadow:0 0 15px orange;
+margin-bottom:20px;
+}
+
+/* Paragraph */
+p{
+color:#f0f0f0;
+text-shadow:0 0 6px black;
+font-size:18px;
+line-height:1.6;
 }
 
 /* Photo Frame */
 .photo-frame{
-margin-top:20px;
+margin:20px auto;
 border:5px solid gold;
-padding:10px;
+padding:8px;
 border-radius:20px;
 box-shadow:0 0 30px gold;
 display:inline-block;
@@ -43,7 +64,7 @@ animation:float 3s ease-in-out infinite;
 }
 
 .photo-frame img{
-width:250px;
+width:220px;
 border-radius:15px;
 }
 
@@ -55,33 +76,35 @@ border-radius:15px;
 
 /* Countdown */
 #countdown{
-font-size:22px;
-margin-top:20px;
-color:lightgreen;
+font-size:20px;
+margin:15px 0;
+color:#00ffcc;
+font-weight:bold;
 }
 
 /* Button */
 button{
-margin-top:25px;
-padding:15px 30px;
+margin-top:20px;
+padding:14px 28px;
 border:none;
 background:gold;
 color:black;
-font-size:18px;
+font-size:16px;
 border-radius:30px;
 cursor:pointer;
 transition:0.3s;
+font-weight:bold;
 }
 
 button:hover{
 background:orange;
-transform:scale(1.1);
+transform:scale(1.08);
 }
 
 /* Secret Page */
 #secret{
 display:none;
-position:absolute;
+position:fixed;
 top:0;
 left:0;
 width:100%;
@@ -91,7 +114,12 @@ color:gold;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-font-size:24px;
+text-align:center;
+padding:30px;
+}
+
+#secret button{
+margin-top:30px;
 }
 
 /* Confetti Canvas */
@@ -110,8 +138,7 @@ pointer-events:none;
 
 <div class="container">
 <h1>🎉 Happy Birthday 🎉</h1>
-<h2 style="color:gold; text-shadow:0 0 10px orange;">Amit Kumar Tiwari Sir ⚛️
-</h2>
+<h2>Amit Kumar Tiwari Sir ⚛️</h2>
 
 <div class="photo-frame">
 <img src="sir.jpg" alt="Sir Photo">
@@ -119,9 +146,12 @@ pointer-events:none;
 
 <div id="countdown"></div>
 
-<p style="color:#f5f5f5; text-shadow:0 0 8px black; font-size:18px;">Sir, you are the force that moves us,<br>
+<p>
+Sir, you are the force that moves us,<br>
 the energy that enlightens us,<br>
-and the constant in our equations of life.
+and the constant in our equations of life.<br><br>
+Without you, our understanding would be in zero gravity.<br>
+Thank you for giving direction and magnitude to our future. 🚀
 </p>
 
 <button onclick="showSecret()">Open Special Message 🎁</button>
@@ -129,40 +159,44 @@ and the constant in our equations of life.
 
 <!-- Secret Page -->
 <div id="secret">
-<div>
-✨ Sir, thank you for giving direction and magnitude to our future. 🚀<br><br>
-We are lucky to have you as our Physics mentor! ⚛️
-<br><br>
-Happy Birthday Once Again! 🎂
-<br><br>
-<button onclick="closeSecret()">Back</button>
-</div>
+<h2>✨ A Special Message ✨</h2>
+<p>
+Respected Sir,<br><br>
+Your teachings are not just formulas and laws,<br>
+they are life lessons that shape our future.<br><br>
+We are truly grateful to have you as our Physics mentor.<br><br>
+Happy Birthday Once Again! 🎂⚛️
+</p>
+<button onclick="closeSecret()">Go Back</button>
 </div>
 
 <script>
 
 /* COUNTDOWN TIMER */
-var birthday = new Date("March 1, 2026 00:00:00").getTime();
+var birthday = new Date("March 5, 2026 00:00:00").getTime(); // CHANGE DATE HERE
+
 var x = setInterval(function(){
 var now = new Date().getTime();
 var distance = birthday - now;
 
-var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-var hours = Math.floor((distance % (1000 * 60 * 60 * 24))/(1000*60*60));
-var minutes = Math.floor((distance % (1000 * 60 * 60))/(1000*60));
-var seconds = Math.floor((distance % (1000 * 60))/1000);
+var days = Math.floor(distance / (1000*60*60*24));
+var hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+var minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+var seconds = Math.floor((distance % (1000*60))/1000);
 
+if(distance > 0){
 document.getElementById("countdown").innerHTML =
 "⏳ Countdown: " + days + "d " + hours + "h "
 + minutes + "m " + seconds + "s ";
-
-if(distance < 0){
+}
+else{
 clearInterval(x);
-document.getElementById("countdown").innerHTML = "🎉 It's His Birthday Today! 🎉";
+document.getElementById("countdown").innerHTML =
+"🎉 Today is the Special Day! 🎉";
 }
 },1000);
 
-/* SECRET PAGE */
+/* SECRET PAGE FUNCTIONS */
 function showSecret(){
 document.getElementById("secret").style.display="flex";
 }
@@ -171,35 +205,46 @@ function closeSecret(){
 document.getElementById("secret").style.display="none";
 }
 
-/* CONFETTI ANIMATION */
+/* REAL CONFETTI ANIMATION */
 var canvas = document.getElementById("confetti");
 var ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-var pieces = [];
-for(var i=0;i<150;i++){
-pieces.push({
+var confetti = [];
+for(var i=0;i<200;i++){
+confetti.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*5+2,
-speed:Math.random()*3+1
+r:Math.random()*6+2,
+d:Math.random()*200,
+color:"hsl(" + Math.random()*360 + ",100%,50%)",
+tilt:Math.floor(Math.random()*10)-10
 });
 }
 
-function update(){
+function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="gold";
-pieces.forEach(function(p){
-ctx.fillRect(p.x,p.y,p.size,p.size);
-p.y+=p.speed;
-if(p.y>canvas.height){
-p.y=0;
+confetti.forEach(function(c){
+ctx.beginPath();
+ctx.fillStyle=c.color;
+ctx.fillRect(c.x,c.y,c.r,c.r);
+});
+update();
+}
+
+function update(){
+confetti.forEach(function(c){
+c.y += Math.cos(c.d) + 2;
+c.x += Math.sin(c.d);
+if(c.y > canvas.height){
+c.y = -10;
+c.x = Math.random()*canvas.width;
 }
 });
-requestAnimationFrame(update);
 }
-update();
+
+setInterval(draw,20);
 
 </script>
 
