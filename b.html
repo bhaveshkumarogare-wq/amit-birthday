@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday Sir</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+padding:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+/* Glass Container */
+.container{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:700px;
+background:rgba(0,0,0,0.6);
+padding:40px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+box-shadow:0 0 30px rgba(255,215,0,0.5);
+}
+
+/* Heading */
+h1{
+font-size:40px;
+color:gold;
+text-shadow:0 0 20px orange;
+margin-bottom:10px;
+}
+
+h2{
+color:gold;
+text-shadow:0 0 15px orange;
+margin-bottom:20px;
+}
+
+/* Paragraph */
+p{
+color:#f0f0f0;
+text-shadow:0 0 6px black;
+font-size:18px;
+line-height:1.6;
+}
+
+/* Photo Frame */
+.photo-frame{
+margin:20px auto;
+border:5px solid gold;
+padding:8px;
+border-radius:20px;
+box-shadow:0 0 30px gold;
+display:inline-block;
+animation:float 3s ease-in-out infinite;
+}
+
+.photo-frame img{
+width:220px;
+border-radius:15px;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+100%{transform:translateY(0);}
+}
+
+/* Countdown */
+#countdown{
+font-size:20px;
+margin:15px 0;
+color:#00ffcc;
+font-weight:bold;
+}
+
+/* Button */
+button{
+margin-top:20px;
+padding:14px 28px;
+border:none;
+background:gold;
+color:black;
+font-size:16px;
+border-radius:30px;
+cursor:pointer;
+transition:0.3s;
+font-weight:bold;
+}
+
+button:hover{
+background:orange;
+transform:scale(1.08);
+}
+
+/* Secret Page */
+#secret{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+color:gold;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:30px;
+}
+
+#secret button{
+margin-top:30px;
+}
+
+/* Confetti Canvas */
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+<h1>🎉 Happy Birthday 🎉</h1>
+<h2>Amit Kumar Tiwari Sir ⚛️</h2>
+
+<div class="photo-frame">
+<img src="sir.jpg" alt="Sir Photo">
+</div>
+
+<div id="countdown"></div>
+
+<p>
+Sir, you are the force that moves us,<br>
+the energy that enlightens us,<br>
+and the constant in our equations of life.<br><br>
+Without you, our understanding would be in zero gravity.<br>
+Thank you for giving direction and magnitude to our future. 🚀
+</p>
+
+<button onclick="showSecret()">Open Special Message 🎁</button>
+</div>
+
+<!-- Secret Page -->
+<div id="secret">
+<h2>✨ A Special Message ✨</h2>
+<p>
+Respected Sir,<br><br>
+Your teachings are not just formulas and laws,<br>
+they are life lessons that shape our future.<br><br>
+We are truly grateful to have you as our Physics mentor.<br><br>
+Happy Birthday Once Again! 🎂⚛️
+</p>
+<button onclick="closeSecret()">Go Back</button>
+</div>
+
+<script>
+
+/* COUNTDOWN TIMER */
+var birthday = new Date("March 5, 2026 00:00:00").getTime(); // CHANGE DATE HERE
+
+var x = setInterval(function(){
+var now = new Date().getTime();
+var distance = birthday - now;
+
+var days = Math.floor(distance / (1000*60*60*24));
+var hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+var minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+var seconds = Math.floor((distance % (1000*60))/1000);
+
+if(distance > 0){
+document.getElementById("countdown").innerHTML =
+"⏳ Countdown: " + days + "d " + hours + "h "
++ minutes + "m " + seconds + "s ";
+}
+else{
+clearInterval(x);
+document.getElementById("countdown").innerHTML =
+"🎉 Today is the Special Day! 🎉";
+}
+},1000);
+
+/* SECRET PAGE FUNCTIONS */
+function showSecret(){
+document.getElementById("secret").style.display="flex";
+}
+
+function closeSecret(){
+document.getElementById("secret").style.display="none";
+}
+
+/* REAL CONFETTI ANIMATION */
+var canvas = document.getElementById("confetti");
+var ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+var confetti = [];
+for(var i=0;i<200;i++){
+confetti.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*6+2,
+d:Math.random()*200,
+color:"hsl(" + Math.random()*360 + ",100%,50%)",
+tilt:Math.floor(Math.random()*10)-10
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+confetti.forEach(function(c){
+ctx.beginPath();
+ctx.fillStyle=c.color;
+ctx.fillRect(c.x,c.y,c.r,c.r);
+});
+update();
+}
+
+function update(){
+confetti.forEach(function(c){
+c.y += Math.cos(c.d) + 2;
+c.x += Math.sin(c.d);
+if(c.y > canvas.height){
+c.y = -10;
+c.x = Math.random()*canvas.width;
+}
+});
+}
+
+setInterval(draw,20);
+
+</script>
+
+</body>
+</html>
